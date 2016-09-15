@@ -11,14 +11,4 @@
 |
 */
 
-Route::get('/', function () {
-    $path = app_path()."/Web/index.js";
-    $json = json_encode([
-        "name" => "Izra"
-    ]);
-    $output;
-    $start = microtime();
-    exec("node $path '$json'", $output);
-    $html = implode("\n", $output);
-    return $html;
-});
+Route::get('/', 'IndexController@index');
