@@ -1,0 +1,24 @@
+- var title = "Binusmaya Calendar"
+
+doctype html
+html
+  head
+    title=title
+    link(href="/assets/css/normalize.css" rel="stylesheet")
+    link(href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+    link(href="/assets/css/app.css" rel="stylesheet")
+  body
+    nav.navbar.navbar-default
+      .container
+        .navbar-header
+          a.navbar-brand(href="#")=title
+    .container
+      .row
+        .col-md-6.col-md-offset-3
+          form.form-custom(method="post" action="/api/v1/auth/login")
+            .input-group
+              input.form-control(type="text" placeholder="Username")
+              span.input-group-addon @binus.ac.id
+            .input-group
+              span.input-group-addon=""
+              input.form-control(type="password" placeholder="Password")

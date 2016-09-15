@@ -20,7 +20,6 @@ describe("Schedule parsing test", function() {
         var scheduleTest = schedules[0];
         assert.isTrue(scheduleTest.start.isAfter(now));
         var formatted = scheduleTest.start.format("YYYY-MM-DD HH:mm");
-        console.log(formatted);
     });
 
     it("should show schedule from the past", function() {
@@ -28,6 +27,5 @@ describe("Schedule parsing test", function() {
         var scheduleTest = schedules[schedules.length - 1];
         assert.isTrue(scheduleTest.start.isBefore(now));
         var formatted = scheduleTest.finish.format("YYYY-MM-DD HH:mm");
-        console.log(formatted);
     });
 });
