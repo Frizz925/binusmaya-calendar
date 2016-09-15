@@ -6,24 +6,35 @@ use Log;
 use Uuid;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 
 use App\Http\Requests;
+use App\IPC\NodeIPC;
 
-class IndexController extends Controller
-{
+class IndexController extends Controller {
+    protected $sockPath;
+
+    public function __construct() {
+        $this->sockPath = app_path()."/Web/node.sock";
+    }
+
     public function index() {
         $uuid = Uuid::generate()->string;
-        $message = [
+        $data = [
             "uuid" => $uuid, 
             "path" => "index",
             "data" => [
-                "name" => "Shiki"
+                "name" => "Ichinose Shiki"
             ]
         ];
-        Redis::publish("node-renderer-req-$uuid", json_encode($message));
-        Redis::subscribe(["node-renderer-res-$uuid"], function($message) {
-            die($message);
-        });
+
+        $html = "";
+        (new NodeIPC)->connect($this->sockPath)
+            ->emit("page-render", $data)
+            ->listen("page-render", function($data) use (&$html) {
+                $html = $data;
+            })
+            ->disconnect();
+
+        return $html;
     }
 }

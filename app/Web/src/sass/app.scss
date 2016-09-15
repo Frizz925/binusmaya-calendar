@@ -1,0 +1,23 @@
+$bg-color: #eee;
+$bg-color-2: #fff;
+$bg-color-3: #ccc;
+$fg-color: #333;
+
+body {
+  background-color: $bg-color;
+  color: $fg-color;
+  font-family: 'Raleway', 'Helvetica', 'Arial', sans-serif;
+}
+
+.bg-solid {
+  background-color: $bg-color-2;
+  border-radius: 2.5px;
+  padding: 15px;
+  border: 1px solid $bg-color-3;
+}
+
+.input-group {
+  margin-bottom: 7px;
+}
+
+

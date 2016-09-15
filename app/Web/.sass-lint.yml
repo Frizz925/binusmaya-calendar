@@ -1,0 +1,6 @@
+files:
+  include: 'src/sass/**/*.s+(a|c)ss'
+  ignore:
+    - 'node_modules/**/*.*'
+rules:
+  property-sort-order: 0

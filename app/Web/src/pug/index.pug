@@ -4,9 +4,12 @@ doctype html
 html
   head
     title=title
+    link(href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet")
     link(href="/assets/css/normalize.css" rel="stylesheet")
     link(href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+    link(href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet")
     link(href="/assets/css/app.css" rel="stylesheet")
+    script(href="/assets/js/jquery.min.js")=""
   body
     nav.navbar.navbar-default
       .container
@@ -14,12 +17,17 @@ html
           a.navbar-brand(href="#")=title
     .container
       .row
-        .col-md-6.col-md-offset-3
-          form.form-custom(method="post" action="/api/v1/auth/login")
+        .col-md-4.col-md-offset-4.bg-solid
+          form#login-form.form-custom
             .input-group
               input.form-control(type="text" placeholder="Username")
               span.input-group-addon @binus.ac.id
             .input-group
-              span.input-group-addon=""
+              span.input-group-addon
+                i.fa.fa-lock=""
               input.form-control(type="password" placeholder="Password")
-          h3 What the fuck
+            .input-group
+              button.btn.btn-default Login
+    #schedule-container.container
+    script(href="/assets/bootstrap/js/bootstrap.min.js")=""
+    script(href="/assets/js/bundle.js")=""
