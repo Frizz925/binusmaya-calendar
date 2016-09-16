@@ -55,6 +55,10 @@ function createFormRequest(path, data, options) {
     return createRequest(path, options);
 }
 
+function getCookies() {
+    return cookieJar.getCookies(baseUrl);
+}
+
 module.exports = {
     request,
     createRequest,
@@ -62,5 +66,6 @@ module.exports = {
     createFormRequest,
     baseUrl,
     servicePath,
-    cookieJar
+    cookieJar,
+    getCookies
 };

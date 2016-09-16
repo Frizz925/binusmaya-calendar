@@ -1,3 +1,4 @@
+var name = "page-render";
 var pug = require('pug');
 var path = require('path');
 var md5File = require('md5-file');
@@ -10,7 +11,7 @@ var cache = require('lru-cache')({
 
 // some helpers
 var resolvePath = function(name) {
-    return path.join(__dirname, `../pug/${name}.pug`);
+    return path.join(__dirname, `../../pug/${name}.pug`);
 };
 
 var compileCache = function(templatePath, hash) {
@@ -23,9 +24,9 @@ var compileCache = function(templatePath, hash) {
     return compile;
 };
 
-var compileTemplate = function(name) {
+var compileTemplate = function(page) {
     return new Promise(function(resolve, reject) {
-        var templatePath = resolvePath(name);
+        var templatePath = resolvePath(page);
         md5File(templatePath, function(err, hash) {
             if (err) {
                 reject(err);
@@ -39,10 +40,13 @@ var compileTemplate = function(name) {
 
 // main logic
 module.exports = function(server) {
-    return function(data, socket) {
-        compileTemplate("index").then(function(compile) {
-            var html = compile();
-            server.emit(socket, "page-render", html);
+    server.on(name, function(data, socket) {
+        compileTemplate(data.page).then(function(compile) {
+            var html = compile(data.data);
+            server.emit(socket, name, {
+                status: 200,
+                html
+            });
         }, console.error);
-    };
+    });
 };

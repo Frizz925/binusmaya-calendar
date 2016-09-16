@@ -1,0 +1,20 @@
+tbody
+  tr
+    th Type
+    th Course
+    th Class
+    th Campus
+    th Room
+    th Date
+    th Start
+    th Finish
+  each schedule in data
+    tr
+      td=schedule.N_DELIVERY_MODE + " - " + schedule.SSR_DESCR
+      td=schedule.CRSE_CODE + " - " + schedule.COURSE_TITLE_LONG
+      td=schedule.CLASS_SECTION
+      td=schedule.LOCATION_DESCR
+      td=schedule.ROOM
+      td=computed.dateStart(schedule)
+      td=computed.timeStart(schedule)
+      td=computed.timeFinish(schedule)

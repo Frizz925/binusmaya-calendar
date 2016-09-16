@@ -9,25 +9,32 @@ html
     link(href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet")
     link(href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet")
     link(href="/assets/css/app.css" rel="stylesheet")
-    script(href="/assets/js/jquery.min.js")=""
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    script(src="/assets/js/jquery.min.js")=""
   body
     nav.navbar.navbar-default
       .container
         .navbar-header
           a.navbar-brand(href="#")=title
     .container
-      .row
-        .col-md-4.col-md-offset-4.bg-solid
+      .row.bg-solid
+        .col-md-4.col-md-offset-4
           form#login-form.form-custom
             .input-group
-              input.form-control(type="text" placeholder="Username")
+              input.form-control(type="text" placeholder="Username" name="uid")
               span.input-group-addon @binus.ac.id
             .input-group
               span.input-group-addon
                 i.fa.fa-lock=""
-              input.form-control(type="password" placeholder="Password")
+              input.form-control(type="password" placeholder="Password" name="pass")
             .input-group
               button.btn.btn-default Login
-    #schedule-container.container
-    script(href="/assets/bootstrap/js/bootstrap.min.js")=""
-    script(href="/assets/js/bundle.js")=""
+      .row.bg-solid
+        .row
+          .col-xs-12
+            h3#api-status Waiting for login...
+            br
+            table#schedule-table.table.table-bordered
+
+    script(src="/assets/bootstrap/js/bootstrap.min.js")=""
+    script(src="/assets/js/bundle.js")=""

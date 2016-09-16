@@ -1,9 +1,9 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var sass = require('gulp-sass');
 var path = require('path');
 var browserSync = require('browser-sync');
-var webpack = require('webpack-stream');
-var webpackConfig = require('./webpack.config');
+var webpack = require('webpack');
 
 var assetPath = path.join(__dirname, "../../public/assets");
 
@@ -34,18 +34,27 @@ gulp.task('sass', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('webpack:watch', function() {
+var webpackCallback = function(cb) {
+    var done = false;
+    return function(err, stats) {
+        if (err) throw new gutil.PluginError("[webpack]", err);
+        gutil.log("[webpack]", stats.toString());
+        if (!done) {
+            done = true;
+            cb();
+        }
+    };
+};
+
+gulp.task('webpack:watch', function(cb) {
     var options = Object.assign({
         watch: true
-    }, webpackConfig);
-    return gulp.src('./src/**/index.js')
-        .pipe(webpack(options))
-        .pipe(gulp.dest(assetPath + '/js'));
+    }, require('./webpack.config'));
+    webpack(options, webpackCallback(cb));
 });
 
-gulp.task('webpack', function() {
-    return gulp.src('./src/**/index.js')
-        .pipe(webpack(webpackConfig))
-        .pipe(gulp.dest(assetPath + '/js'));
+gulp.task('webpack', function(cb) {
+    var options = require('./webpack.config');
+    webpack(options, webpackCallback(cb));
 });
 

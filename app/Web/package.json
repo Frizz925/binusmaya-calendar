@@ -11,6 +11,7 @@
     "node-ipc": "^8.1.1",
     "pug": "^2.0.0-beta6",
     "querystring": "^0.2.0",
+    "redis": "^2.6.2",
     "request": "^2.74.0"
   },
   "devDependencies": {
@@ -18,9 +19,9 @@
     "gulp": "^3.9.1",
     "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
+    "json-loader": "^0.5.4",
     "node-sass": "^3.10.0",
     "pug-loader": "^2.3.0",
-    "webpack": "^1.13.2",
-    "webpack-stream": "^3.2.0"
+    "webpack": "^1.13.2"
   }
 }
