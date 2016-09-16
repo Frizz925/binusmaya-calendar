@@ -33,6 +33,25 @@ var normalizeSchedules = function(schedules) {
     return  _.map(schedules, normalizeSchedule);
 };
 
+var filters = {};
+filters.size = function(arr, options) {
+    var start = options.start || 0;
+    return _.slice(arr, start, start + options.size);
+};
+filters.days = function(arr, options) {
+    var sample = arr[0].start;
+    var start = moment(sample);
+    var finish = moment(sample).add(options.days, 'days');
+    return _.filter(arr, function(o) {
+        return o.start.isBetween(start, finish, null, '[]');
+    });
+};
+filters.weeks = function(arr, options) {
+    return filters.days(arr, {
+        days: options.weeks * 7
+    });
+};
+
 module.exports = function(data) {
     var self = this;
     var json = _.isString(data) ? JSON.parse(data) : data;
@@ -55,19 +74,30 @@ module.exports = function(data) {
         });
     };
 
-    self.future = function() {
-        return self.filterTime(function(now, schedule) {
+    function filterOptions(schedules, options) {
+        options = options || {};
+        var result = schedules;
+        _.each(options, function(opt, key) {
+            result = filters[key](result, options);
+        });
+        return result;
+    }
+
+    self.future = function(options) {
+        var result = self.filterTime(function(now, schedule) {
             return schedule.start.isAfter(now);
         });
+        return filterOptions(result, options);
     };
 
-    self.past = function() {
-        return self.filterTime(function(now, schedule) {
+    self.past = function(options) {
+        var result = self.filterTime(function(now, schedule) {
             return schedule.finish.isBefore(now);
         });
+        return filterOptions(result, options);
     };
 
-    self.all = function() {
-        return schedules;
+    self.all = function(options) {
+        return filterOptions(schedules, options);
     };
 };

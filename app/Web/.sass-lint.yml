@@ -4,3 +4,5 @@ files:
     - 'node_modules/**/*.*'
 rules:
   property-sort-order: 0
+  no-color-literals: 0
+  single-line-per-selector: 0

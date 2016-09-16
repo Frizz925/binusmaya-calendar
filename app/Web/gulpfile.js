@@ -4,6 +4,7 @@ var sass = require('gulp-sass');
 var path = require('path');
 var browserSync = require('browser-sync');
 var webpack = require('webpack');
+var forever = require('gulp-forever-monitor');
 
 var assetPath = path.join(__dirname, "../../public/assets");
 
@@ -15,7 +16,7 @@ gulp.task('watch', ['build', 'webpack:watch'], function() {
     gulp.watch('./src/sass/**/*.scss', ['sass']);
 });
 
-gulp.task('serve', ['watch'], function() {
+gulp.task('serve', ['watch', 'forever'], function() {
     browserSync.init({
         host: "localhost",
         port: 3000,
@@ -25,6 +26,17 @@ gulp.task('serve', ['watch'], function() {
 
     gulp.watch(assetPath + '/**/*.js', browserSync.reload);
     gulp.watch('./src/pug/**/*.pug', browserSync.reload);
+});
+
+gulp.task('forever', function() {
+    forever('index.js', {
+        sourceDir: path.resolve("."),
+        watch: true,
+        watchDirectory: path.resolve("./src"),
+        watchIgnorePatterns: [".*", "pug/**", "sass/**", "client/**"]
+    }).on('watch:restart', function(info) {
+        console.error('Restaring script because ' + info.file + ' changed');
+    });
 });
 
 gulp.task('sass', function() {
