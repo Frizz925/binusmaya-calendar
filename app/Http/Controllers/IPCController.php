@@ -10,17 +10,17 @@ use App\IPC\NodeIPC;
 
 class IPCController extends Controller {
     protected $subscribed;
-    protected $sockPath;
+    protected $socketPath;
     protected $ipc;
 
     public function __construct() {
         $this->subscribed = [];
-        $this->sockPath = app_path()."/Web/node.sock";
+        $this->socketPath = config('ipc.socket_path');
         $this->ipc = new NodeIPC;
     }
 
     protected function ipcConnect($path=null) {
-        if (is_null($path)) $path = $this->sockPath;
+        if (is_null($path)) $path = $this->socketPath;
         $this->ipc->connect($path);
         return $this;
     }

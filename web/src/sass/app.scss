@@ -1,0 +1,172 @@
+@import 'variables';
+
+$default-font: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+$special-font: 'Raleway', 'Helvetica', 'Arial', sans-serif;
+
+$bg-color: #eee;
+$bg-color-2: #fff;
+$bg-color-3: #ccc;
+$fg-color: #000;
+$text-color: rgba($fg-color, .64);
+$light-blue: #03a9f4;
+$primary-500: #2196f3;
+$primary-700: #1976d2;
+$primary-800: #1565c0;
+$accent: #ffe082;
+$white: #fff;
+
+body {
+  color: $text-color;
+  background-color: $bg-color;
+  font-family: $default-font;
+  padding-top: 70px;
+}
+
+.bg-solid {
+  border-radius: 0;
+  background-color: $bg-color-2;
+  border: 1px solid $bg-color-3;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+[class^='col-'] > .bg-solid {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.input-group {
+  margin-bottom: 7px;
+}
+
+.row {
+  margin-bottom: 7px;
+}
+
+h1, h2, h3,
+h4, h5, h6,
+p {
+  margin: 0;
+}
+
+h3 {
+  margin-bottom: 7px;
+  font-family: $special-font;
+}
+
+h4 {
+  font-family: $special-font;
+  font-weight: 600;
+}
+
+b {
+  color: $primary-700;
+}
+
+%schedule-heading {
+  font-weight: 600;
+  font-size: 12pt;
+}
+
+.schedule-col {
+  padding: 0 7px 7px 0;
+
+  h4 {
+    @extend %schedule-heading;
+    margin-top: 7px;
+  }
+}
+
+.schedule-table {
+  th {
+    @extend %schedule-heading;
+  }
+
+  tr + tr {
+    th {
+      padding-top: 7px;
+    }
+
+    th, td {
+      padding-right: 15px;
+    }
+  }
+}
+
+%btn {
+  border-radius: 0;
+  border: 1px solid $primary-700;
+  background-color: $primary-700;
+  font-family: $special-font;
+  color: #fff;
+
+  &:hover, &:active, &:focus {
+    border-color: $primary-500;
+    background-color: $primary-500;
+    color: #fff;
+  }
+}
+
+.btn-custom {
+  @extend %btn;
+}
+
+.navbar-custom {
+  background-color: $primary-700;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+
+  a {
+    color: $white;
+    font-family: $special-font;
+
+    &:hover, &:active {
+      color: $accent;
+    }
+
+    &.navbar-brand {
+      font-size: 12pt;
+      font-weight: 600;
+    }
+  }
+}
+
+.form-custom {
+  .form-control,
+  .input-group-addon {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .form-control {
+    &:focus, &:active {
+      border-color: $primary-700;
+    }
+  }
+
+  .input-group-addon {
+    background-color: $white;
+    font-family: $special-font;
+  }
+}
+
+@media screen and (min-width: $screen-sm) {
+  .schedule-col {
+    &:nth-child(3n+3) {
+      padding-right: 0;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-sm) {
+  .schedule-col {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .bg-solid {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}

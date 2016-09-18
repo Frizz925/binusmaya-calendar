@@ -1,0 +1,54 @@
+- var title = "Binusmaya Calendar"
+
+doctype html
+html
+  head
+    title=title
+    link(href="https://fonts.googleapis.com/css?family=Roboto:400,600" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet")
+    link(href="/assets/css/normalize.css" rel="stylesheet")
+    link(href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+    link(href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet")
+    link(href="/assets/css/app.css" rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    script(src="/assets/js/jquery.min.js")=""
+  body
+    nav.navbar.navbar-custom.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand(href="#")=title
+    .container
+      .row.bg-solid
+        .col-md-4.col-md-offset-4
+          div
+            form(@submit.prevent="doLogin").form-custom
+              .input-group
+                input(type="text" placeholder="Username" v-model="login.uid").form-control
+                span.input-group-addon @binus.ac.id
+              .input-group
+                span.input-group-addon
+                  i.fa.fa-lock=""
+                input(type="password" placeholder="Password" v-model="login.pass").form-control
+              .input-group
+                input(type="submit" value="Login").btn.btn-custom
+      .row.bg-solid
+        .col-xs-12(v-if="!gauth")
+          h4 {{ status }}
+        #schedule-col.col-xs-12.hidden
+          h4 Showing two weeks of upcoming schedules
+          p(style="margin-top: 7px")
+            | The following schedules will be added to your 
+            b Google Calendar
+          div(style="margin-top: 7px")
+            button(data-click="add").btn.btn-custom Add to calendar
+            button(data-click="signin").btn.btn-custom Sign in to Google
+            span#text-progress.hidden
+              | Inserting schedule... (
+              span(data-bind="count")=0
+              | /
+              span(data-bind="total")=0
+              | )
+      .row#schedule-container
+    script(src="/assets/bootstrap/js/bootstrap.min.js")=""
+    script(src="/assets/js/bundle.js")=""
+    script(src="https://apis.google.com/js/client.js?onload=checkAuth")=""

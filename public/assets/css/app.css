@@ -1,12 +1,12 @@
 body {
   color: rgba(0, 0, 0, 0.64);
   background-color: #eee;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   padding-top: 70px; }
 
 .bg-solid {
+  border-radius: 0;
   background-color: #fff;
-  border-radius: 2.5px;
   border: 1px solid #ccc;
   padding-top: 15px;
   padding-bottom: 15px; }
@@ -21,26 +21,23 @@ body {
 .row {
   margin-bottom: 7px; }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
+h1, h2, h3,
+h4, h5, h6,
 p {
   margin: 0; }
 
 h3 {
-  margin-bottom: 7px; }
+  margin-bottom: 7px;
+  font-family: "Raleway", "Helvetica", "Arial", sans-serif; }
 
 h4 {
-  color: #0098d7; }
+  font-family: "Raleway", "Helvetica", "Arial", sans-serif;
+  font-weight: 600; }
 
 b {
-  color: #0098d7; }
+  color: #1976d2; }
 
 .schedule-col h4, .schedule-table th {
-  color: #0098d7;
   font-weight: 600;
   font-size: 12pt; }
 
@@ -49,32 +46,47 @@ b {
   .schedule-col h4 {
     margin-top: 7px; }
 
-.schedule-table th {
+.schedule-table tr + tr th {
   padding-top: 7px; }
 
-.schedule-table th, .schedule-table td {
+.schedule-table tr + tr th, .schedule-table tr + tr td {
   padding-right: 15px; }
 
 .btn-custom {
-  border: 1px solid #0098d7;
-  background-color: #fff;
-  color: #0098d7; }
+  border-radius: 0;
+  border: 1px solid #1976d2;
+  background-color: #1976d2;
+  font-family: "Raleway", "Helvetica", "Arial", sans-serif;
+  color: #fff; }
   .btn-custom:hover, .btn-custom:active, .btn-custom:focus {
-    border-color: #0098d7;
-    background-color: #0098d7;
+    border-color: #2196f3;
+    background-color: #2196f3;
     color: #fff; }
 
 .navbar-custom {
-  background-color: #fff;
+  background-color: #1976d2;
   border-bottom: 1px solid #ccc;
   border-radius: 0; }
   .navbar-custom a {
-    color: #0098d7; }
+    color: #fff;
+    font-family: "Raleway", "Helvetica", "Arial", sans-serif; }
     .navbar-custom a:hover, .navbar-custom a:active {
-      color: #f48b31; }
+      color: #ffe082; }
     .navbar-custom a.navbar-brand {
       font-size: 12pt;
       font-weight: 600; }
+
+.form-custom .form-control,
+.form-custom .input-group-addon {
+  border-radius: 0;
+  box-shadow: none; }
+
+.form-custom .form-control:focus, .form-custom .form-control:active {
+  border-color: #1976d2; }
+
+.form-custom .input-group-addon {
+  background-color: #fff;
+  font-family: "Raleway", "Helvetica", "Arial", sans-serif; }
 
 @media screen and (min-width: 768px) {
   .schedule-col:nth-child(3n+3) {

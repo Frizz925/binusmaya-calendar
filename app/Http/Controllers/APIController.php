@@ -9,7 +9,7 @@ use App\IPC\NodeIPC;
 
 class APIController extends IPCController {
     public function authLogin(Request $request) {
-        $result = $this->ipcEmit("sys-login", $request->all());
+        $result = $this->ipcEmit("api/auth/login", $request->all());
         return response()->json($result, $result->status);
     }
 }
