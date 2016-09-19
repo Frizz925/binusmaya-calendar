@@ -1,87 +1,79 @@
+import _ from 'lodash';
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import moment from 'moment';
 import ScheduleRepository from 'lib/Repository/Schedule';
-import scheduleTemplate from 'pug/pages/home/schedule.pug';
 
 Vue.use(VueResource);
 Vue.config.debug = true;
 Vue.config.async = false;
 
-const repo = {
+const $repo = {
     schedule: new ScheduleRepository
 };
 const data = {
-    status: "Waiting for login...",
+    status: {
+        text: "Waiting for login",
+        error: false
+    },
     schedules: null,
     login: {},
-    gauth: null
+    gauth: null,
+    isInserting: false
 };
 
 const methods = {};
-methods.updateSchedules = function(schedules) {
-
-};
 methods.doLogin = function() {
-    this.$http.post("/api/v1/auth/login", $.param(this.login))
-    .then(resp => {
-        console.log(resp);
-    }, resp => {
-        console.log(resp);
+    this.$set('status', {
+        text: "Logging in... (0:00)",
+        error: false
     });
-    /*
-    $.ajax({
-        url: 
-        method: "POST",
-        data: $.param(this.login),
-        success: data => {
-            this.status = data.message;
-            this.schedules = data.data;
-        },
-        error: err => {
-            var json = err.responseJSON;
-            if (json) {
-                this.status = `${json.message} (${err.status})`;
-            } else {
-                this.status = `Something went wrong. Check console for detail. (${err.status})`;
-            }
-            console.error(err);
+
+    var time = 0;
+    var start = moment();
+    var interval = setInterval(() => {
+        time++;
+        if (time % 30 == 0) {
+            time = moment().diff(start, 'seconds');
         }
+        var minutes = _.padStart(Math.floor(time / 60), 2, '0');
+        var seconds = _.padStart(time % 60, 2, '0');
+        this.status.text = `Logging in... (${minutes}:${seconds})`;
+    }, 1000);
+
+    this.$http.post("/api/v1/auth/login", this.login, {
+        emulateJSON: true
+    }).then(resp => {
+        clearInterval(interval);
+        console.log(resp);
+        var body = resp.body;
+        this.status.text = `${body.message}`;
+        this.updateSchedules(body.data);
+    }, resp => {
+        clearInterval(interval);
+        console.error(resp);
+        var body = resp.body;
+        if (_.isObject(body)) {
+            this.status.text = `${body.message} (${resp.status})`;
+        } else {
+            this.status.text = `${resp.statusText} (${resp.status})`;
+        }
+        this.status.error = true;
     });
-    */
 };
+methods.updateSchedules = function(schedules) {
+    var repo = $repo.schedule;
+    repo.store(schedules);
+    this.$set('schedules', repo.future({ weeks: 2 }));
+};
+methods.dateStart = schedule => moment(schedule.start).format("ddd, DD MMM YYYY");
+methods.timeStart = schedule => moment(schedule.start).format("HH:mm");
+methods.timeFinish = schedule => moment(schedule.finish).format("HH:mm");
 
 new Vue({
     el: "body",
     data, methods
 });
-
-var schedules;
-var scheduleContainer = $("#schedule-container");
-function updateSchedule(_schedules) {
-    var repo = new Repository(_schedules);
-    var computed = {
-        dateStart: schedule => moment(schedule.start).format("ddd, DD MMM YYYY"),
-        timeStart: schedule => moment(schedule.start).format("HH:mm"),
-        timeFinish: schedule => moment(schedule.finish).format("HH:mm")
-    };
-    schedules = repo.future({ weeks: 2 });
-    console.log(schedules);
-
-    scheduleContainer.empty();
-    $.each(schedules, (idx, schedule) => {
-        var local = $.extend({}, schedule, {
-            type: schedule.N_DELIVERY_MODE + " - " + schedule.SSR_DESCR,
-            course: schedule.CRSE_CODE + " - " + schedule.COURSE_TITLE_LONG,
-            dateStart: computed.dateStart(schedule),
-            timeStart: computed.timeStart(schedule),
-            timeFinish: computed.timeFinish(schedule)
-        });
-        var html = scheduleTemplate(local);
-        var el = $(html);
-        scheduleContainer.append(el);
-    });
-}
 
 /*
 var googleHandlers = {

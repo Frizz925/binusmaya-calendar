@@ -24,7 +24,11 @@ module.exports = function(server) {
 var loginHandler = function(server, data) {
     return function(resp) {
         var body = resp.body;
-        if (body.match(/Invalid username/i)) {
+        if (body.match(/iProfilePic/i)) {
+            var cookie = request.getCookies()[0];
+            client.set(data.uid + ":cookie", cookie.value);
+            return cookie;
+        } else if (body.match(/Invalid username/i)) {
             return Promise.reject({
                 clientError: true,
                 data: {
@@ -33,9 +37,13 @@ var loginHandler = function(server, data) {
                 }
             });
         } else {
-            var cookie = request.getCookies()[0];
-            client.set(data.uid + ":cookie", cookie.value);
-            return cookie;
+            return Promise.reject({
+                clientError: true,
+                data: {
+                    status: resp.response.statusCode,
+                    message: resp.response.statusMessage
+                }
+            });
         }
     };
 };

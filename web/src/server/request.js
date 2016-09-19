@@ -1,4 +1,3 @@
-const debug = true;
 var _ = require('lodash');
 var querystring = require('querystring');
 

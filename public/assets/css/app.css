@@ -33,6 +33,8 @@ h3 {
 h4 {
   font-family: "Raleway", "Helvetica", "Arial", sans-serif;
   font-weight: 600; }
+  h4.error {
+    color: #f44336; }
 
 b {
   color: #1976d2; }
@@ -71,7 +73,7 @@ b {
     color: #fff;
     font-family: "Raleway", "Helvetica", "Arial", sans-serif; }
     .navbar-custom a:hover, .navbar-custom a:active {
-      color: #ffe082; }
+      color: #fff; }
     .navbar-custom a.navbar-brand {
       font-size: 12pt;
       font-weight: 600; }
